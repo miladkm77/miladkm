@@ -1,0 +1,90 @@
+<!--{"title":"تماس و رزرو نوبت | دکتر مانلی انصاری مود","description":"رزرو ویزیت آنلاین یا حضوری، شمارهٔ تماس مستقیم و آدرس دو مطب دکتر مانلی انصاری مود در تهران.","nav":"contact","body":"contact","path":"contact.html"}-->
+
+<section class="page-head">
+  <div class="container">
+    <span class="eyebrow">تماس و رزرو</span>
+    <h1>رزرو نوبت</h1>
+    <p class="lead">فرم را پر کنید تا پیام آماده‌شده‌تان در واتس‌اپ باز شود؛ یا مستقیم تماس بگیرید.</p>
+  </div>
+</section>
+
+<section class="section section--tight" style="padding-top:8px">
+  <div class="container contact-grid">
+    <div>
+      <div class="alert" style="margin-bottom:20px" role="note"><svg aria-hidden="true"><use href="#i-alert"/></svg><p style="margin:0">حال حیوان شما اورژانسی است؟ (خونریزی شدید، مشکل تنفسی) فرم را رها کنید و همین حالا به نزدیک‌ترین مرکز اورژانس دامپزشکی مراجعه کنید. <a href="terms.html#emergency">توضیح بیشتر</a></p></div>
+
+      <form class="form" id="form" data-wa="{{site.whatsapp}}" action="{{site.whatsapp}}" method="get" target="_blank" novalidate>
+        <fieldset>
+          <legend>نوع ویزیت</legend>
+          <div class="choice">
+            <input type="radio" name="visit" id="v-online" value="online" checked>
+            <label for="v-online"><b>ویزیت آنلاین</b><span>مشاوره از طریق واتس‌اپ</span></label>
+            <input type="radio" name="visit" id="v-in" value="inperson">
+            <label for="v-in"><b>ویزیت حضوری</b><span>در یکی از دو مطب</span></label>
+          </div>
+        </fieldset>
+
+        <div class="field" id="clinic-field" hidden>
+          <label class="lab" for="clinic">مطب مدنظر</label>
+          <select class="select" id="clinic" name="clinic">
+            <option value="">هنوز مطمئن نیستم</option>
+            <option value="{{site.omid.name}}">{{site.omid.name}} — {{site.omid.days}}</option>
+            <option value="{{site.rico.name}}">{{site.rico.name}} — {{site.rico.days}}</option>
+          </select>
+        </div>
+
+        <div class="two">
+          <div class="field">
+            <label class="lab" for="animal">نوع حیوان</label>
+            <select class="select" id="animal" name="animal">
+              <option>گربه</option><option>سگ</option><option>اگزوتیک (همستر، خوکچه، پرنده، لاک‌پشت و…)</option><option>سایر</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="lab" for="age">سن <span class="opt">(تقریبی)</span></label>
+            <input class="input" id="age" name="age" type="text" autocomplete="off" placeholder="مثلاً ۸ ماه یا ۳ سال">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="lab" for="problem">شرح مختصر مشکل <span class="opt">(اختیاری)</span></label>
+          <textarea class="textarea" id="problem" name="problem" placeholder="از کِی شروع شده؟ چه علائمی دیده‌اید؟"></textarea>
+        </div>
+
+        <div class="two">
+          <div class="field">
+            <label class="lab" for="name">نام شما</label>
+            <input class="input" id="name" name="name" type="text" autocomplete="name" required>
+            <span class="field-err" role="alert"></span>
+          </div>
+          <div class="field">
+            <label class="lab" for="phone">شمارهٔ تماس</label>
+            <input class="input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="۰۹۱۲ ۳۴۵ ۶۷۸۹" required>
+            <span class="field-err" role="alert"></span>
+          </div>
+        </div>
+
+        <div class="form__foot">
+          <button class="btn btn--primary btn--lg" type="submit"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg>ارسال درخواست در واتس‌اپ</button>
+          <p class="form__note">با ارسال درخواست، <a href="terms.html">قوانین و شرایط</a> را می‌پذیرید. پاسخ‌گویی خارج از بازهٔ رزرو حداکثر تا ۲۴ ساعت است.</p>
+          <div class="form__ok" id="form-ok" role="status" aria-live="polite"></div>
+        </div>
+      </form>
+    </div>
+
+    <aside class="side" aria-label="اطلاعات تماس">
+      <div class="card" data-reveal>
+        <h3>تماس مستقیم</h3>
+        <a class="direct ltr" href="tel:{{site.phoneTel}}">{{site.phone}}</a>
+        <a class="btn btn--ghost" href="{{site.whatsapp}}" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg>پیام در واتس‌اپ</a>
+      </div>
+      <div class="card" data-reveal>
+        <h3>مطب‌ها</h3>
+        <div class="mini"><strong>{{site.omid.name}}</strong><span>{{site.omid.address}}</span><span>{{site.omid.days}} · <a class="ltr" href="tel:{{site.omid.tel1}}">{{site.omid.phone1}}</a></span></div>
+        <div class="mini"><strong>{{site.rico.name}}</strong><span>{{site.rico.address}}</span><span>{{site.rico.days}} · <a class="ltr" href="tel:{{site.rico.tel1}}">{{site.rico.phone1}}</a></span></div>
+        <a class="link-arrow" href="services.html#in-person">نقشه و جزئیات <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <p class="form__note"><a href="terms.html">قوانین و شرایط</a> را قبل از ویزیت بخوانید.</p>
+    </aside>
+  </div>
+</section>

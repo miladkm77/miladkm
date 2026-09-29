@@ -1,0 +1,72 @@
+<!--{"title":"خدمات | ویزیت آنلاین و حضوری دکتر مانلی انصاری مود","description":"ویزیت آنلاین از طریق واتس‌اپ (تماس، چت، پیام متنی، فایل صوتی) و ویزیت حضوری در بیمارستان دامپزشکی امید و کلینیک دامپزشکی ریکو، تهران.","nav":"services","body":"services","path":"services.html"}-->
+
+<section class="page-head">
+  <div class="container">
+    <span class="eyebrow">خدمات</span>
+    <h1>دو مسیر برای رسیدن به دکتر</h1>
+    <p class="lead">از هر جا آنلاین مشاوره بگیرید، یا حضوری در یکی از دو مطب تهران ویزیت شوید.</p>
+  </div>
+</section>
+
+<section class="section section--tight" id="online" aria-labelledby="online-title">
+  <div class="container">
+    <article class="card card--blue card--split" data-reveal>
+      <div class="card__col">
+        <span class="card__tag">ویزیت آنلاین</span>
+        <h2 class="h2" id="online-title" style="font-size:clamp(1.7rem,1.2rem + 2vw,2.6rem)">مشاوره‌ای که به خانهٔ شما می‌آید</h2>
+        <ol class="steps">
+          <li><div><b>ثبت اطلاعات حیوان</b><span>نوع حیوان، سن و شرح کوتاه مشکل را در فرم رزرو بنویسید.</span></div></li>
+          <li><div><b>دریافت اطلاعات تماس</b><span>راه ارتباطی برای ادامهٔ مسیر برایتان مشخص می‌شود.</span></div></li>
+          <li><div><b>مشاوره از طریق واتس‌اپ</b><span>گفتگو در قالبی که به وضعیت حیوان‌تان می‌خورد انجام می‌شود.</span></div></li>
+        </ol>
+      </div>
+      <div class="card__col card__col--aside">
+        <div>
+          <p style="margin:0 0 10px;font-weight:700;color:#fff">قالب‌های مشاوره</p>
+          <div class="chips">
+            <span class="chip"><svg aria-hidden="true"><use href="#i-phone"/></svg>تماس تلفنی</span>
+            <span class="chip"><svg aria-hidden="true"><use href="#i-chat"/></svg>چت</span>
+            <span class="chip"><svg aria-hidden="true"><use href="#i-text"/></svg>پیام متنی</span>
+            <span class="chip"><svg aria-hidden="true"><use href="#i-voice"/></svg>فایل صوتی</span>
+          </div>
+        </div>
+        <p>خارج از بازهٔ رزرو، پاسخ‌گویی حداکثر تا ۲۴ ساعت انجام می‌شود.</p>
+        <a class="btn btn--light btn--lg" href="contact.html?visit=online#form">شروع ویزیت آنلاین <svg class="ico ico-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </article>
+    <div class="alert" style="margin-top:20px" data-reveal><svg aria-hidden="true"><use href="#i-alert"/></svg><p style="margin:0">ویزیت آنلاین برای موارد اورژانسی مثل خونریزی شدید یا مشکلات تنفسی مناسب نیست. در این حالت فوراً به نزدیک‌ترین مرکز اورژانس دامپزشکی مراجعه کنید. <a href="terms.html#emergency">جزئیات در قوانین و شرایط</a></p></div>
+  </div>
+</section>
+
+<section class="section section--cream2" id="in-person" aria-labelledby="in-title">
+  <div class="container">
+    <div class="section-head" data-reveal><span class="eyebrow">ویزیت حضوری</span><h2 class="h2" id="in-title">دو مطب، روزهای مشخص</h2></div>
+    <div class="cards cards--2">
+      <article class="card" data-reveal>
+        <h3>{{site.omid.name}}</h3>
+        <div class="days" role="img" aria-label="روزهای حضور: {{site.omid.days}}">
+          <span class="day on" aria-hidden="true">ش</span><span class="day" aria-hidden="true">ی</span><span class="day on" aria-hidden="true">د</span><span class="day" aria-hidden="true">س</span><span class="day" aria-hidden="true">چ</span><span class="day" aria-hidden="true">پ</span><span class="day" aria-hidden="true">ج</span>
+        </div>
+        <div class="clinic-meta">
+          <div><svg aria-hidden="true"><use href="#i-pin"/></svg><span>{{site.omid.address}}</span></div>
+          <div><svg aria-hidden="true"><use href="#i-phone"/></svg><span><a class="ltr" href="tel:{{site.omid.tel1}}">{{site.omid.phone1}}</a> &nbsp;·&nbsp; <a class="ltr" href="tel:{{site.omid.tel2}}">{{site.omid.phone2}}</a></span></div>
+        </div>
+        <a class="link-arrow" href="{{site.omid.map}}" target="_blank" rel="noopener">مسیریابی روی نقشه <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="card" data-reveal>
+        <h3>{{site.rico.name}}</h3>
+        <div class="days" role="img" aria-label="روزهای حضور: {{site.rico.days}}">
+          <span class="day" aria-hidden="true">ش</span><span class="day on" aria-hidden="true">ی</span><span class="day" aria-hidden="true">د</span><span class="day on" aria-hidden="true">س</span><span class="day" aria-hidden="true">چ</span><span class="day on" aria-hidden="true">پ</span><span class="day" aria-hidden="true">ج</span>
+        </div>
+        <div class="clinic-meta">
+          <div><svg aria-hidden="true"><use href="#i-pin"/></svg><span>{{site.rico.address}}</span></div>
+          <div><svg aria-hidden="true"><use href="#i-phone"/></svg><span><a class="ltr" href="tel:{{site.rico.tel1}}">{{site.rico.phone1}}</a></span></div>
+        </div>
+        <a class="link-arrow" href="{{site.rico.map}}" target="_blank" rel="noopener">مسیریابی روی نقشه <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
+    </div>
+    <p style="margin-top:28px" data-reveal><a class="btn btn--primary" href="contact.html?visit=inperson#form">رزرو ویزیت حضوری</a></p>
+  </div>
+</section>
+
+{{> cta}}

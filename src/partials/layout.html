@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{title}}</title>
+<meta name="description" content="{{description}}">
+<link rel="canonical" href="{{canonical}}">
+<meta name="theme-color" content="#FBF8F3">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:site_name" content="{{site.name}}">
+<meta property="og:title" content="{{title}}">
+<meta property="og:description" content="{{description}}">
+<meta property="og:url" content="{{canonical}}">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/vazirmatn-var.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+/* Progressive enhancement gate. "motion" = GSAP may take over; if the library
+   fails to load within 4s the page falls back to plain, fully readable HTML. */
+(function (d) {
+  var r = d.documentElement;
+  r.classList.add('js');
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    r.classList.add('motion');
+    setTimeout(function () {
+      if (!window.__gsapOK) r.classList.remove('motion', 'fip-live');
+    }, 4000);
+  }
+})(document);
+</script>
+<link rel="stylesheet" href="assets/css/style.css?v={{v}}">
+</head>
+<body class="page-{{body}}">
+<a class="skip-link" href="#main">رفتن به محتوای اصلی</a>
+{{> header}}
+<main id="main">
+{{content}}
+</main>
+{{> footer}}
+<nav class="dock" aria-label="دسترسی سریع">
+  <a class="btn btn--ghost" href="tel:{{site.phoneTel}}"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>تماس مستقیم</a>
+  <a class="btn btn--primary" href="contact.html?visit=online#form">شروع ویزیت آنلاین</a>
+</nav>
+{{> icons}}
+<script src="assets/js/vendor/gsap.min.js" defer></script>
+<script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/js/main.js?v={{v}}" defer></script>
+</body>
+</html>
