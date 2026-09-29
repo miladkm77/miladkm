@@ -209,8 +209,7 @@
     if (hs.length) introTl.fromTo(hs, { opacity: 0, y: 36, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, stagger: 0.1, clearProps: 'filter' }, at);
     const card = $('.hero__card');
     if (card) {
-      introTl.fromTo(card, { opacity: 0, y: 90, scale: 0.9, rotateX: 12, transformPerspective: 1200 }, { opacity: 1, y: 0, scale: 1, rotateX: 0, duration: 1.5 }, t0 + 0.2);
-      introTl.fromTo($$('.chip-card'), { opacity: 0, scale: 0.5, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 1.1, stagger: 0.16, ease: 'back.out(1.8)' }, t0 + 0.9);
+      introTl.fromTo(card, { opacity: 0, y: 60, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 1.4 }, t0 + 0.5);
     }
   });
 
