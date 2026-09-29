@@ -49,9 +49,10 @@ cpSync(join(src, 'assets'), join(dist, 'assets'), { recursive: true });
 
 const vendor = join(dist, 'assets/js/vendor');
 mkdirSync(vendor, { recursive: true });
-for (const f of ['gsap.min.js', 'ScrollTrigger.min.js']) {
+for (const f of ['gsap.min.js', 'ScrollTrigger.min.js', 'DrawSVGPlugin.min.js']) {
   cpSync(join(root, 'node_modules/gsap/dist', f), join(vendor, f));
 }
+cpSync(join(root, 'node_modules/lenis/dist/lenis.min.js'), join(vendor, 'lenis.min.js'));
 mkdirSync(join(dist, 'assets/fonts'), { recursive: true });
 cpSync(
   join(root, 'node_modules/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2'),
