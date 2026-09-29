@@ -24,17 +24,16 @@ const fallbackChecks = async (label, ctxOpts, routeBlock) => {
       live: document.documentElement.classList.contains('fip-live'),
       finalVisible: vis('#fip-final'), ctaVisible: vis('#fip-cta'), staticCat: vis('.fip__static'),
       sceneHidden: getComputedStyle(document.querySelector('#fip-scene')).display === 'none',
-      statsText: [...document.querySelectorAll('.stat-strip .tile__num[data-count]')].map((e) => e.textContent.trim()).join(' '),
+      statsText: [...document.querySelectorAll('.stat__num')].map((e) => e.textContent.trim()).join(' '),
       revealHidden: [...document.querySelectorAll('[data-reveal]')].filter((e) => +getComputedStyle(e).opacity < 0.99).length,
-      trackH: document.querySelector('#fip-track').offsetHeight, vh: innerHeight, wipeGone: getComputedStyle(document.querySelector('.wipe')).display === 'none',
+      trackH: document.querySelector('#fip-track').offsetHeight, vh: innerHeight,
     };
   });
   console.log(label, JSON.stringify(st));
   ok(!st.live, `${label}: scroll story not active`);
-  ok(st.wipeGone, `${label}: page wipe never covers content`);
   ok(st.finalVisible && st.ctaVisible, `${label}: end-state card + CTA visible`);
   ok(st.staticCat && st.sceneHidden, `${label}: healthy cat shown, live scene hidden`);
-  ok(st.statsText === '۸۰۰+ ۳۹ ۲۲۵', `${label}: stats show final numbers`);
+  ok(st.statsText === '۳۹ ۸۰۰+ ۲۲۵', `${label}: stats show final numbers`);
   ok(st.revealHidden === 0, `${label}: no content stuck invisible`);
   ok(st.trackH < st.vh * 2, `${label}: no tall scroll track`);
   await page.screenshot({ path: `/tmp/claude-0/-home-user-miladkm/41cccd8f-b68b-5090-938e-f9f8d30056a1/scratchpad/s/fallback-${label}.png`, fullPage: true });
@@ -71,14 +70,21 @@ await fallbackChecks('gsap-blocked', {}, true);
   await ctx.close();
 }
 
-// ---- mobile tab bar
+// ---- mobile nav
 {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   const page = await ctx.newPage();
-  await page.goto(base + '/about.html', { waitUntil: 'networkidle' });
-  ok(await page.isVisible('.tabbar'), 'mobile: tab bar visible');
-  ok((await page.getAttribute('.tabbar a[data-nav=about]', 'aria-current')) === 'page', 'mobile: current tab marked');
-  ok(!(await page.isVisible('.nav')), 'mobile: desktop nav hidden');
+  await page.goto(base + '/index.html', { waitUntil: 'networkidle' });
+  ok(!(await page.isVisible('#nav a[href="about.html"]')), 'mobile nav: closed by default');
+  await page.click('.nav-toggle');
+  await page.waitForTimeout(400);
+  ok(await page.isVisible('#nav a[href="about.html"]'), 'mobile nav: opens');
+  ok((await page.getAttribute('.nav-toggle', 'aria-expanded')) === 'true', 'mobile nav: aria-expanded=true');
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(400);
+  ok(!(await page.isVisible('#nav a[href="about.html"]')), 'mobile nav: Escape closes');
+  const noHScroll = await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
+  ok(noHScroll, 'mobile: no horizontal scroll on home');
   await ctx.close();
 }
 // ---- horizontal overflow on every page, mobile

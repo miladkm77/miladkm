@@ -39,7 +39,7 @@ async function scrollTo(y) { await page.evaluate((y) => window.scrollTo({ top: y
 // ---- home ----
 if (!only || only === 'home') {
   await page.goto(base + '/index.html', { waitUntil: 'networkidle' });
-  await settle(3200);
+  await settle(500);
   await shot('home-01-hero');
   const info = await page.evaluate(() => {
     const t = document.querySelector('#fip-track');
@@ -47,7 +47,7 @@ if (!only || only === 'home') {
     return { top: t.getBoundingClientRect().top + scrollY, height: t.offsetHeight, h, vh: innerHeight, live: document.documentElement.classList.contains('fip-live') };
   });
   console.log('fip', info);
-  const stats = await page.evaluate(() => document.querySelector('.stat-strip').getBoundingClientRect().top + scrollY);
+  const stats = await page.evaluate(() => document.querySelector('.stats').getBoundingClientRect().top + scrollY);
   await scrollTo(stats - 200); await shot('home-02-stats');
   const intro = await page.evaluate(() => document.querySelector('.fip__intro').getBoundingClientRect().top + scrollY);
   await scrollTo(intro - 60); await shot('home-03-fip-intro');
@@ -65,7 +65,7 @@ if (!only || only === 'home') {
 for (const p of ['about', 'services', 'contact', 'terms']) {
   if (only && only !== p) continue;
   await page.goto(`${base}/${p}.html`, { waitUntil: 'networkidle' });
-  await settle(3000);
+  await settle(600);
   // scroll the whole page slowly so reveal animations fire
   const H = await page.evaluate(() => document.documentElement.scrollHeight);
   for (let y = 0; y < H; y += 400) { await page.evaluate((y) => scrollTo(0, y), y); await page.waitForTimeout(160); }

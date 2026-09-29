@@ -1,29 +1,41 @@
 <!--{"title":"دکتر مانلی انصاری مود | متخصص داخلی دام کوچک و درمان FIP","description":"دکتر مانلی انصاری مود، متخصص داخلی دام کوچک با تمرکز ویژه بر درمان FIP با GS-441524. ویزیت آنلاین و حضوری در تهران؛ ۳۹ مقالهٔ علمی و تجربهٔ درمان بیش از ۸۰۰ گربه.","nav":"home","body":"home","path":"index.html"}-->
 
-<!-- ============ Act 1 — Hero ============ -->
-<section class="hero hero--center" aria-labelledby="hero-title">
-  <div class="container">
-    <p class="hero__eyebrow" data-h>متخصص داخلی دام کوچک · شمارهٔ نظام دامپزشکی {{site.license}}</p>
-    <h1 id="hero-title" data-split>دکتر مانلی انصاری مود</h1>
-    <p class="hero__text" data-h>با تمرکز ویژه بر درمان FIP؛ جایی که تجربهٔ بالینی و پژوهش علمی به هم می‌رسند.</p>
-    <div class="hero__cta" data-h>
-      <a class="btn btn--primary" href="contact.html?visit=online#form">شروع ویزیت آنلاین</a>
-      <a class="btn btn--ghost" href="tel:{{site.phoneTel}}">تماس مستقیم <span class="ltr">{{site.phone}}</span> ›</a>
+<!-- ============ Act 1 — Hero (static on purpose: no load animation) ============ -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="hero__badge"><span class="hero__dot" aria-hidden="true"></span>شمارهٔ نظام دامپزشکی <b>{{site.license}}</b></p>
+      <h1 id="hero-title">دکتر مانلی <span>انصاری مود</span></h1>
+      <p class="hero__role">متخصص داخلی دام کوچک</p>
+      <p class="hero__text">با تمرکز ویژه بر درمان FIP؛ جایی که تجربهٔ بالینی و پژوهش علمی به هم می‌رسند.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary btn--lg" href="contact.html?visit=online#form">شروع ویزیت آنلاین <svg class="ico ico-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--ghost btn--lg" href="tel:{{site.phoneTel}}"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span class="ltr">{{site.phone}}</span></a>
+      </div>
+      <p class="hero__note"><svg aria-hidden="true"><use href="#i-check"/></svg>پاسخ‌گویی به پیام‌ها حداکثر ظرف ۲۴ ساعت</p>
     </div>
-    <div class="hero__stage" id="hero-stage"><div class="hero__card">{{hero_photo}}</div></div>
+
+    <div class="hero__photo">
+      <div class="photo-frame" data-parallax>
+        <div class="photo-frame__inner">
+          {{hero_photo}}
+        </div>
+      </div>
+      <div class="hero__chip"><strong>بورد تخصصی داخلی دام کوچک</strong><span>رتبهٔ اول امتحان جامع بورد</span></div>
+    </div>
   </div>
 </section>
 
-<!-- ============ Act 2 — Credibility (bento) ============ -->
-<section class="section" aria-labelledby="cred-title">
+<!-- ============ Act 2 — Credibility ============ -->
+<section class="section section--tight section--white" aria-labelledby="cred-title">
   <div class="container">
-    <div class="section-head" data-reveal><span class="eyebrow">اعتبار</span><h2 class="h2" id="cred-title">سه دلیل برای اعتماد</h2></div>
-    <div class="stat-strip glass" data-reveal>
-      <div><span class="tile__num" data-count="800" data-suffix="+">۸۰۰+</span><span class="tile__label">گربه تحت درمان FIP</span></div>
-      <div><span class="tile__num" data-count="39">۳۹</span><span class="tile__label">مقالهٔ علمی منتشرشده</span></div>
-      <div><span class="tile__num" data-count="225">۲۲۵</span><span class="tile__label">استناد علمی</span></div>
+    <h2 class="sr-only" id="cred-title">اعتبار علمی و بالینی</h2>
+    <div class="stats">
+      <div class="stat" data-reveal><span class="stat__num" data-count="39">۳۹</span><span class="stat__label">مقالهٔ علمی منتشرشده</span></div>
+      <div class="stat" data-reveal><span class="stat__num" data-count="800" data-suffix="+">۸۰۰+</span><span class="stat__label">گربه تحت درمان FIP</span></div>
+      <div class="stat" data-reveal><span class="stat__num" data-count="225">۲۲۵</span><span class="stat__label">استناد علمی</span></div>
     </div>
-    <p class="stats-foot" data-reveal style="margin-top:22px">رتبهٔ اول امتحان جامع بورد تخصصی · آمار پژوهشی بر پایهٔ پروفایل ResearchGate · <a href="about.html#research">مشاهدهٔ پژوهش‌ها</a></p>
+    <p class="stats-foot" data-reveal>آمار پژوهشی بر پایهٔ پروفایل ResearchGate · <a href="about.html#research">مشاهدهٔ پژوهش‌ها</a></p>
   </div>
 </section>
 
@@ -33,25 +45,26 @@
     <div class="section-head section-head--center" data-reveal>
       <span class="eyebrow">تخصص ویژه</span>
       <h2 class="h2" id="fip-title">درمان FIP با پروتکل <em>GS-441524</em></h2>
+      <p class="lead">FIP (پریتونیت عفونی گربه) تا چند سال پیش تقریباً حکم قطعی بود؛ امروز با پروتکل ۸۴ روزهٔ <span class="ltr">GS-441524</span> بسیاری از گربه‌ها به درمان پاسخ می‌دهند. نتیجه هیچ‌وقت تضمین‌شده نیست و به تشخیص زودهنگام و پیگیری دقیق بستگی دارد. دکتر مانلی این پروتکل را برای بیش از ۸۰۰ گربه اجرا کرده است.</p>
     </div>
-    <p class="scrub-text" data-scrub style="text-align:center">FIP (پریتونیت عفونی گربه) تا چند سال پیش تقریباً حکم قطعی بود؛ امروز با پروتکل ۸۴ روزهٔ <span class="ltr">GS-441524</span> بسیاری از گربه‌ها به درمان پاسخ می‌دهند. نتیجه هیچ‌وقت تضمین‌شده نیست و به تشخیص زودهنگام و پیگیری دقیق بستگی دارد. دکتر مانلی این پروتکل را برای بیش از ۸۰۰ گربه اجرا کرده است.</p>
   </div>
 
   <div class="fip__track" id="fip-track">
     <div class="fip__stage" id="fip-stage">
-      <a class="fip__skip glass" href="#services">رد شدن از روایت ↓</a>
-      <div class="fip__aura" id="fip-aura" aria-hidden="true"></div>
+      <a class="fip__skip" href="#services">رد شدن از روایت ↓</a>
 
-      <div class="fip__hud glass" aria-hidden="true">
+      <div class="fip__hud" aria-hidden="true">
         <div class="fip__day"><small>روز درمان</small><b id="fip-day">۱</b></div>
-        <div>
+        <div class="fip__meter">
           <div class="fip__meter-track"><span class="fip__meter-fill" id="fip-meter"></span></div>
           <div class="fip__meter-ticks"><span>۱</span><span>۲۸</span><span>۵۶</span><span>۸۴</span></div>
         </div>
       </div>
 
       <div class="fip__art" role="img" aria-label="ایلاستریشن یک گربه که طی ۸۴ روز درمان از حالت خمیده و بی‌رمق به حالت نشسته و سرحال می‌رسد و سپس یکی از صدها گربهٔ تحت درمان می‌شود">
+        <!-- Fallback / reduced-motion: just the healthy end-state -->
         <svg class="fip__static" viewBox="40 30 350 340" aria-hidden="true" focusable="false">{{cat_frame4}}</svg>
+        <!-- Live scene (built out by main.js) -->
         <svg class="fip__scene" id="fip-scene" viewBox="-640 -360 1280 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
           <g id="fip-world">
             <g id="fip-crowd"></g>
@@ -61,10 +74,10 @@
       </div>
 
       <div class="fip__final" id="fip-final">
-        <div class="fip__final-card glass glass--strong">
+        <div class="fip__final-card">
           <span class="fip__num" id="fip-num">۸۰۰+</span>
           <span class="fip__cap">گربه تحت درمان با <span class="ltr">GS-441524</span><small>هر کدام یک مسیر جدا؛ و همهٔ آن‌ها با یک نگرانی مشترک شروع شد.</small></span>
-          <a class="btn btn--primary btn--lg btn--glow" id="fip-cta" href="contact.html?visit=online#form">شروع ویزیت آنلاین <svg class="ico ico-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--primary btn--lg" id="fip-cta" href="contact.html?visit=online#form">شروع ویزیت آنلاین <svg class="ico ico-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           <p class="fip__disclaimer">درمان FIP همیشه به نتیجه نمی‌رسد و هیچ نتیجه‌ای تضمین نمی‌شود. تصمیم درمانی پس از بررسی پروندهٔ حیوان شما گرفته می‌شود.</p>
         </div>
       </div>
@@ -73,20 +86,20 @@
 </section>
 
 <!-- ============ Act 4 — Services + CTA ============ -->
-<section class="section section--gray" id="services" aria-labelledby="svc-title">
+<section class="section section--cream2" id="services" aria-labelledby="svc-title">
   <div class="container">
     <div class="section-head" data-reveal>
       <span class="eyebrow">چطور شروع کنیم؟</span>
-      <h2 class="h2" id="svc-title" data-split>دو راه برای رسیدن به ویزیت</h2>
+      <h2 class="h2" id="svc-title">آنلاین یا حضوری؛ هرکدام راحت‌تر است</h2>
     </div>
     <div class="cards cards--2">
-      <article class="card card--blue glass" data-reveal>
+      <article class="card card--blue" data-reveal>
         <span class="card__tag">ویزیت آنلاین</span>
         <h3>مشاوره از راه دور، از طریق واتس‌اپ</h3>
         <p>اطلاعات حیوان‌تان را ثبت می‌کنید، شمارهٔ تماس را دریافت می‌کنید و مشاوره به‌صورت تماس تلفنی، چت، پیام متنی یا فایل صوتی انجام می‌شود.</p>
         <a class="btn btn--light" href="contact.html?visit=online#form">شروع ویزیت آنلاین <svg class="ico ico-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </article>
-      <article class="card glass" data-reveal>
+      <article class="card" data-reveal>
         <span class="card__tag">ویزیت حضوری</span>
         <h3>دو مطب در تهران</h3>
         <p>{{site.omid.name}} ({{site.omid.days}}) و {{site.rico.name}} ({{site.rico.days}}).</p>
@@ -96,7 +109,18 @@
   </div>
 </section>
 
-{{> cta}}
+<section class="cta section" aria-labelledby="cta-title">
+  <div class="container cta__row">
+    <div data-reveal>
+      <h2 id="cta-title">حیوانتان نگرانتان کرده؟</h2>
+      <p>برای شروع فقط چند خط دربارهٔ او بنویسید. بقیهٔ مسیر را با هم می‌رویم.</p>
+    </div>
+    <div class="cta__actions" data-reveal>
+      <a class="btn btn--light btn--lg" href="contact.html#form">رزرو نوبت</a>
+      <a class="btn btn--ghost btn--lg" href="tel:{{site.phoneTel}}"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span class="ltr">{{site.phone}}</span></a>
+    </div>
+  </div>
+</section>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>{{cat_defs}}</defs></svg>
 

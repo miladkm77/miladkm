@@ -2,9 +2,9 @@
 
 <section class="page-head">
   <div class="container">
-    <span class="eyebrow" data-h>تماس و رزرو</span>
-    <h1 data-split>رزرو نوبت</h1>
-    <p class="lead" data-h style="margin-top:22px">فرم را پر کنید تا پیام آماده‌شده‌تان در واتس‌اپ باز شود؛ یا مستقیم تماس بگیرید.</p>
+    <span class="eyebrow">تماس و رزرو</span>
+    <h1>رزرو نوبت</h1>
+    <p class="lead">فرم را پر کنید تا پیام آماده‌شده‌تان در واتس‌اپ باز شود؛ یا مستقیم تماس بگیرید.</p>
   </div>
 </section>
 
@@ -13,7 +13,7 @@
     <div>
       <div class="alert" style="margin-bottom:20px" role="note"><svg aria-hidden="true"><use href="#i-alert"/></svg><p style="margin:0">حال حیوان شما اورژانسی است؟ (خونریزی شدید، مشکل تنفسی) فرم را رها کنید و همین حالا به نزدیک‌ترین مرکز اورژانس دامپزشکی مراجعه کنید. <a href="terms.html#emergency">توضیح بیشتر</a></p></div>
 
-      <form class="form glass" id="form" data-wa="{{site.whatsapp}}" action="{{site.whatsapp}}" method="get" target="_blank" novalidate>
+      <form class="form" id="form" data-wa="{{site.whatsapp}}" action="{{site.whatsapp}}" method="get" target="_blank" novalidate>
         <fieldset>
           <legend>نوع ویزیت</legend>
           <div class="choice">
@@ -73,12 +73,12 @@
     </div>
 
     <aside class="side" aria-label="اطلاعات تماس">
-      <div class="card glass" data-reveal>
+      <div class="card" data-reveal>
         <h3>تماس مستقیم</h3>
         <a class="direct ltr" href="tel:{{site.phoneTel}}">{{site.phone}}</a>
         <a class="btn btn--ghost" href="{{site.whatsapp}}" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg>پیام در واتس‌اپ</a>
       </div>
-      <div class="card glass" data-reveal>
+      <div class="card" data-reveal>
         <h3>مطب‌ها</h3>
         <div class="mini"><strong>{{site.omid.name}}</strong><span>{{site.omid.address}}</span><span>{{site.omid.days}} · <a class="ltr" href="tel:{{site.omid.tel1}}">{{site.omid.phone1}}</a></span></div>
         <div class="mini"><strong>{{site.rico.name}}</strong><span>{{site.rico.address}}</span><span>{{site.rico.days}} · <a class="ltr" href="tel:{{site.rico.tel1}}">{{site.rico.phone1}}</a></span></div>

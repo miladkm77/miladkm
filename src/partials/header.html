@@ -1,15 +1,23 @@
 <header class="site-header" id="top">
-  <div class="bar glass">
+  <div class="container site-header__row">
     <a class="brand" href="index.html" aria-label="{{site.name}} — صفحه اصلی">
-      <span class="brand__mark" aria-hidden="true">م</span>
-      <span class="brand__text"><strong>دکتر مانلی انصاری</strong><small>متخصص داخلی دام کوچک</small></span>
+      <span class="brand__text">
+        <strong>دکتر مانلی انصاری</strong>
+        <small>متخصص داخلی دام کوچک</small>
+      </span>
     </a>
+
     <nav class="nav" id="nav" aria-label="منوی اصلی">
-      <i class="nav__ind" aria-hidden="true"></i>
       <a href="about.html" data-nav="about">درباره من</a>
       <a href="services.html" data-nav="services">خدمات</a>
       <a href="contact.html" data-nav="contact">تماس</a>
     </nav>
-    <a class="btn btn--primary btn--sm" href="contact.html#form">رزرو نوبت</a>
+
+    <div class="site-header__actions">
+      <a class="btn btn--primary btn--sm" href="contact.html#form">رزرو نوبت</a>
+      <button class="nav-toggle" type="button" aria-controls="nav" aria-expanded="false" aria-label="باز کردن منو">
+        <span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
