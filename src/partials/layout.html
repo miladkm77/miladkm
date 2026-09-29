@@ -6,7 +6,7 @@
 <title>{{title}}</title>
 <meta name="description" content="{{description}}">
 <link rel="canonical" href="{{canonical}}">
-<meta name="theme-color" content="#FBF8F3">
+<meta name="theme-color" content="#f5f1e8">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fa_IR">
 <meta property="og:site_name" content="{{site.name}}">
@@ -15,6 +15,7 @@
 <meta property="og:url" content="{{canonical}}">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/vazirmatn-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/naskh-var.woff2" as="font" type="font/woff2" crossorigin>
 <script>
 /* Progressive enhancement gate. "motion" = GSAP may take over; if the library
    fails to load within 4s the page falls back to plain, fully readable HTML. */
@@ -39,12 +40,13 @@
 </main>
 {{> footer}}
 <nav class="dock" aria-label="دسترسی سریع">
-  <a class="btn btn--ghost" href="tel:{{site.phoneTel}}"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>تماس مستقیم</a>
-  <a class="btn btn--primary" href="contact.html?visit=online#form">شروع ویزیت آنلاین</a>
+  <a class="dock__call" href="tel:{{site.phoneTel}}"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>تماس</a>
+  <a class="dock__go" href="contact.html?visit=online#form">شروع ویزیت آنلاین</a>
 </nav>
 {{> icons}}
 <script src="assets/js/vendor/gsap.min.js" defer></script>
 <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/js/vendor/lenis.min.js" defer></script>
 <script src="assets/js/main.js?v={{v}}" defer></script>
 </body>
 </html>

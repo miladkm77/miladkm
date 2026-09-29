@@ -59,6 +59,7 @@ cpSync(
   join(dist, 'assets/fonts/vazirmatn-var.woff2'),
 );
 cpSync(join(root, 'node_modules/vazirmatn/OFL.txt'), join(dist, 'assets/fonts/OFL.txt'));
+cpSync(join(root, 'node_modules/@fontsource-variable/noto-naskh-arabic/files/noto-naskh-arabic-arabic-wght-normal.woff2'), join(dist, 'assets/fonts/naskh-var.woff2'));
 
 const hash = createHash('md5')
   .update(readFileSync(join(src, 'assets/css/style.css')))

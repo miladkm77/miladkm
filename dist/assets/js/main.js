@@ -105,87 +105,126 @@
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({ ignoreMobileResize: true });
 
-  const headerH = () => (header ? header.offsetHeight : 70);
-  const mm = gsap.matchMedia();
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const phone = window.matchMedia('(max-width: 719px)').matches;
+  const clamp = gsap.utils.clamp;
+  const safe = (name, fn) => { try { fn(); } catch (err) { console.warn(`[${name}]`, err); } };
+  const headerH = () => (header ? header.offsetHeight : 72);
 
-  /* 1 — gentle reveals (≈0.4 s fade + short slide, batched) */
-  mm.add({ all: '(min-width: 0px)', mobile: '(max-width: 719px)' }, (ctx) => {
-    const mobile = ctx.conditions.mobile;
-    if (!$('[data-reveal]')) return;
-    ScrollTrigger.batch('[data-reveal]', {
-      start: 'top 90%',
-      once: true,
-      interval: 0.08,
-      batchMax: 6,
-      onEnter: (els) =>
-        gsap.to(els, {
-          opacity: 1,
-          y: 0,
-          duration: mobile ? 0.3 : 0.4,
-          ease: 'power2.out',
-          stagger: 0.07,
-          overwrite: true,
-          onComplete() {
-            els.forEach((el) => {
-              el.classList.add('is-in');
-              gsap.set(el, { clearProps: 'opacity,transform' });
-            });
-          },
-        }),
-    });
-    const pending = $$('[data-reveal]:not(.is-in)');
-    if (pending.length) gsap.set(pending, { y: mobile ? 16 : 26 });
-  });
-
-  /* 2 — count-up numbers */
-  $$('[data-count]').forEach((el) => {
-    const target = Number(el.dataset.count);
-    const suffix = el.dataset.suffix || '';
-    const o = { v: 0 };
-    el.textContent = fa(0) + suffix;
-    ScrollTrigger.create({
-      trigger: el,
-      start: 'top 90%',
-      once: true,
-      onEnter: () =>
-        gsap.to(o, {
-          v: target,
-          duration: 0.9,
-          ease: 'power2.out',
-          onUpdate: () => { el.textContent = fa(Math.round(o.v)) + suffix; },
-        }),
+  /* smooth scroll — pointer devices only; touch keeps native momentum */
+  let lenis = null;
+  safe('lenis', () => {
+    if (!fine || !window.Lenis) return;
+    lenis = new window.Lenis({ lerp: 0.09 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"], a[href*=".html#"]');
+      if (!a) return;
+      const url = new URL(a.href, location.href);
+      if (url.pathname !== location.pathname || url.hash.length < 2) return;
+      const t = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+      if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -90, duration: 1.4 }); }
     });
   });
 
-  /* 3 — very soft hero parallax (desktop pointer devices only, ≤ ~7 %) */
-  mm.add('(min-width: 900px) and (hover: hover)', () => {
-    const inner = $('[data-parallax] .photo-frame__inner');
-    if (!inner) return;
-    gsap.fromTo(
-      inner,
-      { yPercent: -4 },
-      { yPercent: 4, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } },
-    );
+  /* words → masked spans (Persian joins letters, so never split below the word) */
+  const splitWords = (el, mode) => {
+    const out = [];
+    const walk = (node) => {
+      Array.from(node.childNodes).forEach((n) => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach((p) => {
+            if (!p) return;
+            if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(' ')); return; }
+            if (mode === 'scrub') {
+              const sp = document.createElement('span'); sp.className = 'sw'; sp.textContent = p; frag.appendChild(sp); out.push(sp);
+            } else {
+              const w = document.createElement('span'); w.className = 'w';
+              const i = document.createElement('span'); i.className = 'wi'; i.textContent = p;
+              w.appendChild(i); frag.appendChild(w); out.push(i);
+            }
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1 && !n.classList.contains('ltr')) walk(n);
+      });
+    };
+    walk(el);
+    return out;
+  };
+  const inView = (el, k = 0.95) => { const r = el.getBoundingClientRect(); return r.top < window.innerHeight * k && r.bottom > 0; };
+
+  /* ---------------------------------------------------------- intro */
+  safe('intro', () => {
+    const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+    let at = 0.05;
+    $$('[data-split]').forEach((el) => {
+      const words = splitWords(el);
+      if (inView(el)) {
+        tl.from(words, { yPercent: 115, duration: 1.25, stagger: 0.09 }, at);
+        at += 0.2;
+      } else {
+        gsap.from(words, { yPercent: 115, duration: 1.1, stagger: 0.07, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+      }
+    });
+    const hs = $$('[data-h]');
+    if (hs.length) tl.fromTo(hs, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1.1, stagger: 0.12, clearProps: 'transform' }, at + 0.15);
+    const arch = $('#hero-arch');
+    if (arch) {
+      tl.fromTo(arch, { clipPath: 'inset(22% 8% 0% 8% round 999px 999px 28px 28px)' }, { clipPath: 'inset(0% 0% 0% 0% round 999px 999px 28px 28px)', duration: 1.6, ease: 'expo.inOut', clearProps: 'clipPath' }, 0.1);
+      const cat = $('.photo-frame__ph', arch) || $('img', arch);
+      if (cat) gsap.fromTo(cat, { yPercent: 8 }, { yPercent: -6, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+    }
   });
 
-  /* 4 — education timeline draws itself as it scrolls in */
-  const tlEl = $('.timeline');
-  if (tlEl) {
-    gsap.fromTo(
-      $('.timeline__fill', tlEl),
-      { scaleY: 0 },
-      { scaleY: 1, ease: 'none', scrollTrigger: { trigger: tlEl, start: 'top 72%', end: 'bottom 62%', scrub: 0.4 } },
-    );
-    ScrollTrigger.batch($$('.tl', tlEl), {
-      start: 'top 72%',
-      once: true,
-      onEnter: (els) => els.forEach((el) => el.classList.add('is-on')),
+  /* ------------------------------------------------ scroll-in reveals */
+  safe('reveals', () => {
+    const els = $$('[data-reveal]');
+    if (!els.length) return;
+    ScrollTrigger.batch(els, {
+      start: 'top 90%', once: true, interval: 0.08, batchMax: 6,
+      onEnter: (batch) => gsap.to(batch, {
+        opacity: 1, y: 0, duration: phone ? 0.7 : 1, ease: 'expo.out', stagger: 0.1, overwrite: true,
+        onComplete() { batch.forEach((el) => { el.classList.add('is-in'); gsap.set(el, { clearProps: 'opacity,transform' }); }); },
+      }),
     });
-  }
+    gsap.set(els.filter((e) => !e.classList.contains('is-in')), { y: phone ? 20 : 32 });
+  });
 
-  /* 5 — FIP scroll story (spec §8) ------------------------------------- */
-  const track = $('#fip-track');
-  if (track) {
+  safe('scrub-text', () => {
+    $$('[data-scrub]').forEach((el) => {
+      const words = splitWords(el, 'scrub');
+      gsap.fromTo(words, { opacity: 0.2 }, { opacity: 1, ease: 'none', stagger: 0.12, scrollTrigger: { trigger: el, start: 'top 80%', end: 'bottom 50%', scrub: 0.5 } });
+    });
+  });
+
+  /* numbers: rule draws, digits count up */
+  safe('numbers', () => {
+    $$('.num__rule').forEach((r) => gsap.fromTo(r, { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: r, start: 'top 92%', once: true } }));
+    $$('[data-count]').forEach((el) => {
+      const target = Number(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const o = { v: 0 };
+      el.textContent = fa(0) + suffix;
+      ScrollTrigger.create({
+        trigger: el, start: 'top 92%', once: true,
+        onEnter: () => gsap.to(o, { v: target, duration: 1.8, ease: 'expo.out', onUpdate: () => { el.textContent = fa(Math.round(o.v)) + suffix; } }),
+      });
+    });
+  });
+
+  /* about: timeline rows light up as they pass */
+  safe('timeline', () => {
+    const rows = $$('.tl');
+    if (rows.length) ScrollTrigger.batch(rows, { start: 'top 70%', once: true, onEnter: (b) => b.forEach((r) => r.classList.add('is-on')) });
+  });
+
+  /* ============================================================ FIP story */
+  safe('fip', () => {
+    const track = $('#fip-track');
+    if (!track) return;
     const stage = $('#fip-stage');
     const world = $('#fip-world');
     const crowd = $('#fip-crowd');
@@ -200,23 +239,23 @@
 
     const NS = 'http://www.w3.org/2000/svg';
     const XLINK = 'http://www.w3.org/1999/xlink';
-    const GRAY = { line: '#8b929c', fill: '#eceef1', bg: '#f1f2f4' };
-    const BLUE = { line: '#1f5fd0', fill: '#dbe8fb', bg: '#eef4ff' };
-    const mix = gsap.utils.interpolate;
-    const CAT = { x: 0, y: -120 }; // world position of the hero cat
+    const GRAY = { line: '#8a93a8', fill: '#121828' };
+    const BLUE = { line: '#79a2ff', fill: '#1a2a5e' };
+    const mixC = gsap.utils.interpolate;
+    const CAT = { x: 0, y: -120 };
 
+    const mm = gsap.matchMedia();
     mm.add({ all: '(min-width: 0px)', mobile: '(max-width: 719px)', portrait: '(orientation: portrait)' }, (ctx) => {
       const { mobile, portrait } = ctx.conditions;
       root.classList.add('fip-live');
       scene.setAttribute('viewBox', portrait ? '-360 -640 720 1280' : '-640 -360 1280 720');
 
-      /* crowd of silhouettes — deterministic pseudo-random so it never reshuffles */
       let seed = 7;
       const rnd = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
       const halfW = portrait ? 420 : 760;
       const halfH = portrait ? 760 : 430;
-      const dx = mobile ? 104 : 90;
-      const dy = mobile ? 80 : 62;
+      const dx = mobile ? 104 : 88;
+      const dy = mobile ? 80 : 60;
       const RINGS = 9;
       const rings = Array.from({ length: RINGS }, () => {
         const g = document.createElementNS(NS, 'g');
@@ -229,44 +268,39 @@
         for (let x = -halfW + (row % 2 ? dx / 2 : 0); x <= halfW; x += dx) {
           const cx = x + (rnd() - 0.5) * 26;
           const cy = y + (rnd() - 0.5) * 18;
-          if (Math.abs(cx - CAT.x) < 66 && Math.abs(cy - CAT.y) < 54) continue; // keep the hero cat clear
-          const s = 0.8 + rnd() * 0.42;
+          if (Math.abs(cx - CAT.x) < 66 && Math.abs(cy - CAT.y) < 54) continue;
+          const sc = 0.8 + rnd() * 0.42;
           const flip = rnd() < 0.5 ? -1 : 1;
           const u = document.createElementNS(NS, 'use');
           u.setAttribute('href', '#cat-sil');
           u.setAttributeNS(XLINK, 'xlink:href', '#cat-sil');
-          u.setAttribute('x', '-50');
-          u.setAttribute('y', '-50');
-          u.setAttribute('width', '100');
-          u.setAttribute('height', '100');
-          u.setAttribute('transform', `translate(${cx.toFixed(1)} ${cy.toFixed(1)}) scale(${(flip * s).toFixed(3)} ${s.toFixed(3)})`);
-          u.setAttribute('opacity', (0.26 + rnd() * 0.5).toFixed(2));
+          u.setAttribute('x', '-50'); u.setAttribute('y', '-50'); u.setAttribute('width', '100'); u.setAttribute('height', '100');
+          u.setAttribute('transform', `translate(${cx.toFixed(1)} ${cy.toFixed(1)}) scale(${(flip * sc).toFixed(3)} ${sc.toFixed(3)})`);
+          u.setAttribute('opacity', (0.18 + rnd() * 0.5).toFixed(2));
           const d = Math.hypot((cx - CAT.x) / 1.25, cy - CAT.y);
           rings[Math.min(RINGS - 1, Math.floor(d / (mobile ? 95 : 105)))].appendChild(u);
         }
       }
 
-      /* frames used: 4 on desktop, 3 on mobile (lighter) */
-      const Z0 = portrait ? 5.6 : 6.2; // opening zoom (cat fills the frame)
+      const Z0 = portrait ? 5.6 : 6.2;
       const useIdx = mobile ? [0, 2, 3] : [0, 1, 2, 3];
       frames.forEach((f) => { f.style.transformOrigin = '226px 350px'; });
-
       let lastDay = -1;
       const st = { h: 0, e: 0, n: 0 };
+      const ease = gsap.parseEase('power2.inOut');
 
       const render = () => {
-        // health → colour, background, pose, day counter
         const h = st.h;
-        const c = gsap.utils.clamp(0, 1, h);
-        stage.style.setProperty('--cat-line', mix(GRAY.line, BLUE.line, c));
-        stage.style.setProperty('--cat-fill', mix(GRAY.fill, BLUE.fill, c));
-        stage.style.setProperty('--stage-bg', mix(GRAY.bg, BLUE.bg, c));
+        const c = clamp(0, 1, h);
+        stage.style.setProperty('--cat-line', mixC(GRAY.line, BLUE.line, c));
+        stage.style.setProperty('--cat-fill', mixC(GRAY.fill, BLUE.fill, c));
+        stage.style.setProperty('--glow', (0.04 + 0.5 * c * (1 - 0.6 * st.e)).toFixed(3));
 
         const last = useIdx.length - 1;
         const t = h * last;
         const i = Math.min(last - 1, Math.floor(t));
         const frac = h >= 1 ? 1 : t - i;
-        const a = gsap.parseEase('power2.inOut')(gsap.utils.clamp(0, 1, (frac - 0.5) / 0.4)); // hold, then dissolve
+        const a = ease(clamp(0, 1, (frac - 0.5) / 0.4));
         frames.forEach((f, k) => {
           let o = 0;
           if (k === useIdx[i]) o = a >= 0.999 ? 0 : 1;
@@ -278,31 +312,26 @@
         if (day !== lastDay) { dayEl.textContent = fa(day); lastDay = day; }
         meter.style.transform = `scaleX(${h.toFixed(4)})`;
 
-        // camera pull-back (log-interpolated zoom feels linear to the eye)
         const e = st.e;
         const z = Math.pow(Z0, 1 - e);
-        const vy = -20 + (CAT.y + 20) * e; // where the hero cat sits on screen
+        const vy = -20 + (CAT.y + 20) * e;
         world.setAttribute('transform', `translate(0 ${(vy - CAT.y * z).toFixed(2)}) scale(${z.toFixed(4)})`);
-
-        // 800+
         num.textContent = fa(Math.round(st.n)) + '+';
       };
 
+      /* fully reversible: scrubbed both ways, never touches the scroll itself */
       const tl = gsap.timeline({
         defaults: { ease: 'none' },
         onUpdate: render,
-        scrollTrigger: { trigger: track, start: () => `top ${headerH()}px`, end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: track, start: 'top top', end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true },
       });
-      // 0–10 %: hold (day 1) · 10–75 %: recovery · 75–85 %: hold (healthy)
       tl.to(st, { h: 1, duration: 0.65 }, 0.1);
-      // 85–100 %: camera pulls back, one cat becomes hundreds
       tl.to(st, { e: 1, duration: 0.15, ease: 'power2.inOut' }, 0.85);
-      tl.to(hud, { autoAlpha: 0, duration: 0.05 }, 0.86);
+      tl.to(hud, { autoAlpha: 0, duration: 0.05 }, 0.85);
       rings.forEach((g, i) => tl.to(g, { attr: { opacity: 1 }, duration: 0.06 }, 0.84 + i * 0.011));
       tl.to(st, { n: 800, duration: 0.11, ease: 'power2.out' }, 0.87);
-      tl.fromTo(final, { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.06, ease: 'power2.out' }, 0.89);
-      // the animation ends ON the call to action
-      tl.fromTo(cta, { autoAlpha: 0, scale: 0.9 }, { autoAlpha: 1, scale: 1, duration: 0.035, ease: 'back.out(2.2)' }, 0.965);
+      tl.fromTo(final, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.06, ease: 'power2.out' }, 0.89);
+      tl.fromTo(cta, { autoAlpha: 0, scale: 0.9 }, { autoAlpha: 1, scale: 1, duration: 0.035, ease: 'back.out(2)' }, 0.965);
       tl.duration(1);
       render();
 
@@ -310,13 +339,10 @@
         crowd.replaceChildren();
         root.classList.remove('fip-live');
         frames.forEach((f) => { f.style.opacity = ''; f.style.transform = ''; });
-        stage.style.removeProperty('--cat-line');
-        stage.style.removeProperty('--cat-fill');
-        stage.style.removeProperty('--stage-bg');
+        ['--cat-line', '--cat-fill', '--glow'].forEach((p) => stage.style.removeProperty(p));
       };
     });
-  }
+  });
 
-  /* fonts change line breaks → measure again */
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
 })();

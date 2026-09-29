@@ -24,7 +24,7 @@ const fallbackChecks = async (label, ctxOpts, routeBlock) => {
       live: document.documentElement.classList.contains('fip-live'),
       finalVisible: vis('#fip-final'), ctaVisible: vis('#fip-cta'), staticCat: vis('.fip__static'),
       sceneHidden: getComputedStyle(document.querySelector('#fip-scene')).display === 'none',
-      statsText: [...document.querySelectorAll('.stat__num')].map((e) => e.textContent.trim()).join(' '),
+      statsText: [...document.querySelectorAll('.num__v')].map((e) => e.textContent.trim()).join(' '),
       revealHidden: [...document.querySelectorAll('[data-reveal]')].filter((e) => +getComputedStyle(e).opacity < 0.99).length,
       trackH: document.querySelector('#fip-track').offsetHeight, vh: innerHeight,
     };
@@ -33,7 +33,7 @@ const fallbackChecks = async (label, ctxOpts, routeBlock) => {
   ok(!st.live, `${label}: scroll story not active`);
   ok(st.finalVisible && st.ctaVisible, `${label}: end-state card + CTA visible`);
   ok(st.staticCat && st.sceneHidden, `${label}: healthy cat shown, live scene hidden`);
-  ok(st.statsText === '۳۹ ۸۰۰+ ۲۲۵', `${label}: stats show final numbers`);
+  ok(st.statsText === '۸۰۰+ ۳۹ ۲۲۵', `${label}: stats show final numbers`);
   ok(st.revealHidden === 0, `${label}: no content stuck invisible`);
   ok(st.trackH < st.vh * 2, `${label}: no tall scroll track`);
   await page.screenshot({ path: `/tmp/claude-0/-home-user-miladkm/41cccd8f-b68b-5090-938e-f9f8d30056a1/scratchpad/s/fallback-${label}.png`, fullPage: true });
