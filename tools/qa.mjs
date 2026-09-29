@@ -24,7 +24,7 @@ const fallbackChecks = async (label, ctxOpts, routeBlock) => {
       live: document.documentElement.classList.contains('fip-live'),
       finalVisible: vis('#fip-final'), ctaVisible: vis('#fip-cta'), staticCat: vis('.fip__static'),
       sceneHidden: getComputedStyle(document.querySelector('#fip-scene')).display === 'none',
-      statsText: [...document.querySelectorAll('.bento .tile__num[data-count]')].map((e) => e.textContent.trim()).join(' '),
+      statsText: [...document.querySelectorAll('.stat-strip .tile__num[data-count]')].map((e) => e.textContent.trim()).join(' '),
       revealHidden: [...document.querySelectorAll('[data-reveal]')].filter((e) => +getComputedStyle(e).opacity < 0.99).length,
       trackH: document.querySelector('#fip-track').offsetHeight, vh: innerHeight, wipeGone: getComputedStyle(document.querySelector('.wipe')).display === 'none',
     };

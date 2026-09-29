@@ -535,7 +535,7 @@ html.motion .bio__lead .sw { opacity: 0.16; }
 .motion .wipe { display: block; transform: translateY(0); pointer-events: auto; }
 
 /* ---------- Motion (progressive) ---------- */
-.motion [data-reveal]:not(.is-in) { opacity: 0; transform: translateY(46px) scale(0.965); filter: blur(8px); transition: none; }
+.motion [data-reveal]:not(.is-in) { opacity: 0; transform: translateY(28px); transition: none; }
 .motion [data-h] { opacity: 0; }
 .motion .chip-card, .motion .hero__card { opacity: 0; }
 
@@ -556,3 +556,36 @@ html.motion .bio__lead .sw { opacity: 0.16; }
 html { overflow-x: clip; }
 @media (min-width: 900px) { html.motion .hs, html.motion .hs__pin, html.motion .hs__viewport { overflow-x: clip; } }
 @media (max-width: 899px) { .tile--xl .tile__art svg { width: 62%; opacity: 0.4; } }
+
+
+/* ==========================================================================
+   Calm pass — fewer, quieter elements. Overrides the rules above.
+   ========================================================================== */
+.orb { opacity: 0.4; filter: blur(90px); }
+.o2 { opacity: 0.32; } .o3 { opacity: 0.26; } .o4 { display: none; }
+.glass::after { opacity: 0.3; }
+.glass:hover { --sheen: 0.5; }
+.section { padding-block: clamp(88px, 12vw, 170px); }
+.section-head { margin-bottom: clamp(40px, 6vw, 72px); }
+.eyebrow { background: none; box-shadow: none; padding: 0; margin-bottom: 14px; }
+.eyebrow::before { display: none; }
+.hero { min-height: 92svh; padding-bottom: 60px; }
+.hero__badge { box-shadow: none; background: rgba(255, 255, 255, 0.5); }
+.hero__cta { margin-top: 32px; }
+.hero__stage { min-height: 460px; }
+@media (min-width: 960px) { .hero__stage { min-height: 560px; } }
+.hero__card { inset: 4% 10%; }
+.c1 { top: auto; bottom: 8%; inset-inline-end: auto; inset-inline-start: -4%; }
+.motion .chip-card { animation: none; }
+.stat-strip { display: grid; border-radius: var(--r-xl); padding: clamp(28px, 4vw, 56px) clamp(16px, 3vw, 40px); }
+@media (min-width: 720px) { .stat-strip { grid-template-columns: repeat(3, 1fr); } .stat-strip > div + div { border-inline-start: 1px solid var(--line); } }
+.stat-strip > div { text-align: center; padding: 18px 12px; }
+@media (max-width: 719px) { .stat-strip > div + div { border-top: 1px solid var(--line); } }
+.stat-strip .tile__num { font-size: clamp(3.6rem, 2rem + 5.6vw, 6.4rem); }
+.stat-strip .tile__label { margin-top: 6px; display: block; }
+.card:hover { box-shadow: var(--shadow-glass); }
+.site-footer__mark { display: none; }
+.cta::before, .cta::after { display: none; }
+.fip-live .fip__aura { opacity: 0.35; }
+.btn--glow { animation: none; }
+.tabbar a, .bar { box-shadow: var(--shadow-glass); }

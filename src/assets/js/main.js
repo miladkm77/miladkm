@@ -221,11 +221,11 @@
     ScrollTrigger.batch(els, {
       start: 'top 90%', once: true, interval: 0.08, batchMax: 6,
       onEnter: (batch) => gsap.to(batch, {
-        opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: phone ? 0.7 : 1, ease: 'expo.out', stagger: 0.1, overwrite: true,
-        onComplete() { batch.forEach((el) => { el.classList.add('is-in'); gsap.set(el, { clearProps: 'opacity,transform,filter' }); }); },
+        opacity: 1, y: 0, duration: phone ? 0.6 : 0.9, ease: 'power3.out', stagger: 0.08, overwrite: true,
+        onComplete() { batch.forEach((el) => { el.classList.add('is-in'); gsap.set(el, { clearProps: 'opacity,transform' }); }); },
       }),
     });
-    gsap.set(els.filter((e) => !e.classList.contains('is-in')), { y: phone ? 24 : 46, scale: 0.965 });
+    gsap.set(els.filter((e) => !e.classList.contains('is-in')), { y: phone ? 18 : 28 });
   });
 
   safe('scrub-text', () => {
@@ -245,16 +245,6 @@
         el.style.setProperty('--my', `${e.clientY - r.top}px`);
       });
     });
-    $$('[data-tilt]').forEach((el) => {
-      const deg = Number(el.dataset.tilt) || 5;
-      el.addEventListener('pointermove', (e) => {
-        const r = el.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width - 0.5;
-        const py = (e.clientY - r.top) / r.height - 0.5;
-        gsap.to(el, { rotationY: px * deg * 2, rotationX: -py * deg * 2, transformPerspective: 1000, duration: 0.7, ease: 'power3.out', overwrite: 'auto' });
-      });
-      el.addEventListener('pointerleave', () => gsap.to(el, { rotationY: 0, rotationX: 0, duration: 1.1, ease: 'elastic.out(1, 0.6)', overwrite: 'auto' }));
-    });
     $$('[data-magnet]').forEach((el) => {
       const qx = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' });
       const qy = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3.out' });
@@ -272,37 +262,6 @@
     const stage = $('#hero-stage');
     if (!stage) return;
     gsap.to(stage, { yPercent: -7, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-    if (!fine) return;
-    const layers = $$('[data-depth]', stage).map((el) => ({ d: Number(el.dataset.depth), x: gsap.quickTo(el, 'x', { duration: 1.1, ease: 'power3.out' }), y: gsap.quickTo(el, 'y', { duration: 1.1, ease: 'power3.out' }) }));
-    const hero = $('.hero');
-    hero.addEventListener('pointermove', (e) => {
-      const nx = e.clientX / window.innerWidth - 0.5;
-      const ny = e.clientY / window.innerHeight - 0.5;
-      layers.forEach((l) => { l.x(nx * l.d * -14); l.y(ny * l.d * -10); });
-    });
-  });
-
-  /* --------------------------------------------------------- marquee */
-  safe('marquee', () => {
-    const track = $('.marquee__track');
-    if (!track) return;
-    const build = () => {
-      const html = track.dataset.src || (track.dataset.src = track.innerHTML);
-      track.innerHTML = html + html;
-      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-      const half = (track.scrollWidth + gap) / 2;
-      const tween = gsap.to(track, { x: half, duration: half / 70, ease: 'none', repeat: -1 });
-      let calm;
-      ScrollTrigger.create({
-        trigger: '.marquee', start: 'top bottom', end: 'bottom top',
-        onUpdate: (s) => {
-          gsap.to(tween, { timeScale: clamp(-8, 8, 1 + s.getVelocity() / 260), duration: 0.25, overwrite: true });
-          calm?.kill();
-          calm = gsap.delayedCall(0.12, () => gsap.to(tween, { timeScale: 1, duration: 1.2, ease: 'power2.out', overwrite: true }));
-        },
-      });
-    };
-    (document.fonts?.ready || Promise.resolve()).then(build);
   });
 
   /* ---------------------------------------------- counters + bento art */
@@ -317,15 +276,6 @@
         onEnter: () => gsap.to(o, { v: target, duration: 1.8, ease: 'expo.out', onUpdate: () => { el.textContent = fa(Math.round(o.v)) + suffix; } }),
       });
     });
-    const ring = $('.r-fg');
-    if (ring) gsap.fromTo(ring, { strokeDashoffset: 238.76 }, { strokeDashoffset: 52, duration: 2, ease: 'expo.out', scrollTrigger: { trigger: ring, start: 'top 90%', once: true } });
-    const bars = $$('.bars i');
-    if (bars.length) gsap.from(bars, { scaleY: 0, duration: 1.1, stagger: 0.09, ease: 'back.out(1.6)', scrollTrigger: { trigger: '.bars', start: 'top 90%', once: true } });
-    const sils = $$('.silhouettes use');
-    if (sils.length) {
-      gsap.from(sils, { opacity: 0, y: 50, duration: 1.4, stagger: 0.09, ease: 'expo.out', scrollTrigger: { trigger: '.tile--xl', start: 'top 85%', once: true } });
-      gsap.to('.silhouettes', { yPercent: -8, ease: 'none', scrollTrigger: { trigger: '.tile--xl', start: 'top bottom', end: 'bottom top', scrub: true } });
-    }
   });
 
   /* --------------------------------------------- services steps line */
@@ -373,9 +323,7 @@
     const dayEl = $('#fip-day');
     const meter = $('#fip-meter');
     const hud = $('.fip__hud', stage);
-    const capEl = $('#fip-caption');
     const aura = $('#fip-aura');
-    const ringsG = $('#fip-rings');
     const final = $('#fip-final');
     const cta = $('#fip-cta');
     const num = $('#fip-num');
@@ -387,10 +335,6 @@
     const mixC = gsap.utils.interpolate;
     const CAT = { x: 0, y: -120 };
     const CAPS = ['شروع پروتکل GS-441524', 'ادامهٔ درمان، زیر نظر دامپزشک', 'پایان نزدیک است', 'روز ۸۴ · پایان دورهٔ پروتکل'];
-
-    const capText = document.createElement('span');
-    capText.textContent = capEl.textContent;
-    capEl.replaceChildren(capText);
 
     const mm = gsap.matchMedia();
     mm.add({ all: '(min-width: 0px)', mobile: '(max-width: 719px)', portrait: '(orientation: portrait)' }, (ctx) => {
@@ -434,11 +378,8 @@
       const Z0 = portrait ? 5.6 : 6.2;
       const useIdx = mobile ? [0, 2, 3] : [0, 1, 2, 3];
       frames.forEach((f) => { f.style.transformOrigin = '226px 350px'; });
-      ringsG.style.transformBox = 'fill-box';
-      ringsG.style.transformOrigin = 'center';
 
       let lastDay = -1;
-      let lastCap = -1;
       const st = { h: 0, e: 0, n: 0 };
 
       const render = () => {
@@ -465,12 +406,6 @@
         const day = Math.round(1 + 83 * h);
         if (day !== lastDay) { dayEl.textContent = fa(day); lastDay = day; }
         meter.style.transform = `scaleX(${h.toFixed(4)})`;
-        const ci = h >= 0.999 ? 3 : Math.min(2, Math.floor(h * 3));
-        if (ci !== lastCap) {
-          lastCap = ci;
-          gsap.fromTo(capText, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'expo.out', overwrite: true });
-          capText.textContent = CAPS[ci];
-        }
 
         // camera pull-back
         const e = st.e;
@@ -481,10 +416,6 @@
         // aura + ripple rings
         aura.style.scale = (0.55 + 0.65 * c).toFixed(3);
         aura.style.opacity = ((0.3 + 0.4 * c) * (1 - 0.85 * e)).toFixed(3);
-        const rv = clamp(0, 1, (h - 0.55) / 0.45) * (1 - e);
-        ringsG.setAttribute('opacity', (rv * 0.6).toFixed(3));
-        ringsG.style.transform = `scale(${(0.85 + 0.25 * c).toFixed(3)})`;
-
         num.textContent = fa(Math.round(st.n)) + '+';
       };
 
@@ -495,7 +426,7 @@
       });
       tl.to(st, { h: 1, duration: 0.65 }, 0.1);
       tl.to(st, { e: 1, duration: 0.15, ease: 'power2.inOut' }, 0.85);
-      tl.to([hud, capEl], { autoAlpha: 0, duration: 0.05 }, 0.85);
+      tl.to(hud, { autoAlpha: 0, duration: 0.05 }, 0.85);
       rings.forEach((g, i) => tl.to(g, { attr: { opacity: 1 }, duration: 0.06 }, 0.84 + i * 0.011));
       tl.to(st, { n: 800, duration: 0.11, ease: 'power2.out' }, 0.87);
       tl.fromTo(final, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.06, ease: 'power2.out' }, 0.89);

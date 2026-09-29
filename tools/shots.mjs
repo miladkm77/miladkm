@@ -47,7 +47,7 @@ if (!only || only === 'home') {
     return { top: t.getBoundingClientRect().top + scrollY, height: t.offsetHeight, h, vh: innerHeight, live: document.documentElement.classList.contains('fip-live') };
   });
   console.log('fip', info);
-  const stats = await page.evaluate(() => document.querySelector('.bento').getBoundingClientRect().top + scrollY);
+  const stats = await page.evaluate(() => document.querySelector('.stat-strip').getBoundingClientRect().top + scrollY);
   await scrollTo(stats - 200); await shot('home-02-stats');
   const intro = await page.evaluate(() => document.querySelector('.fip__intro').getBoundingClientRect().top + scrollY);
   await scrollTo(intro - 60); await shot('home-03-fip-intro');
