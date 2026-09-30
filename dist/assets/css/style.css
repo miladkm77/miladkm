@@ -413,3 +413,29 @@ html.motion .scrub-text .sw { opacity: 0.2; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 .photo-frame__ph { padding-bottom: 38px; } .photo-frame__tag { inset-inline: 22%; bottom: 12px; font-size: 0.7rem; padding: 4px 10px; }
+
+/* ---------- balanced home: numbers ×4, areas list, about strip ---------- */
+@media (min-width: 900px) { .numbers__grid { grid-template-columns: repeat(4, 1fr); gap: 36px; } }
+@media (min-width: 560px) and (max-width: 899px) { .numbers__grid { grid-template-columns: 1fr 1fr; } }
+.num__v { font-size: clamp(4.4rem, 2.4rem + 6vw, 8rem); }
+.areas .h2 { max-width: 20ch; margin-bottom: clamp(40px, 6vw, 80px); }
+.area-list { border-bottom: 1px solid var(--line); }
+.area-list li { border-top: 1px solid var(--line); }
+.area-list a { display: grid; grid-template-columns: 56px 1fr auto; gap: 4px 20px; align-items: baseline; padding: 26px 0; transition: padding 0.4s var(--ease), color 0.3s; }
+.area__n { color: var(--ink-3); font-size: 1.5rem; }
+.area__t { font-size: clamp(1.6rem, 1.1rem + 1.6vw, 2.6rem); line-height: 1.4; }
+.area__d { grid-column: 2; color: var(--ink-2); max-width: 52ch; }
+.area__go { grid-column: 3; grid-row: 1; font-size: 1.6rem; color: var(--ink-3); transition: transform 0.4s var(--ease), color 0.3s; }
+.area-list a:hover { padding-inline-start: 14px; color: var(--blue); }
+.area-list a:hover .area__go { transform: translateX(-8px); color: var(--blue); }
+@media (min-width: 900px) {
+  .area-list a { grid-template-columns: 72px 1.1fr 1fr auto; align-items: center; padding: 30px 0; }
+  .area__d { grid-column: 3; }
+  .area__go { grid-column: 4; }
+}
+.about-strip { display: grid; gap: 48px; align-items: start; }
+@media (min-width: 900px) { .about-strip { grid-template-columns: 1.2fr 0.8fr; gap: 96px; } }
+.about-strip .h2 { max-width: 14ch; }
+.mini-tl { border-top: 1px solid var(--line); }
+.mini-tl li { display: grid; grid-template-columns: 110px 1fr; align-items: baseline; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.mini-tl .display { font-size: 2rem; color: var(--blue); }

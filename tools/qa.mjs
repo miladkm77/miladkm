@@ -16,7 +16,7 @@ const fallbackChecks = async (label, ctxOpts, routeBlock) => {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, ...ctxOpts });
   const page = await ctx.newPage();
   if (routeBlock) await page.route('**/vendor/*.js', (r) => r.abort());
-  await page.goto(base + '/index.html', { waitUntil: 'load' });
+  await page.goto(base + '/fip.html', { waitUntil: 'load' });
   await page.waitForTimeout(routeBlock ? 4600 : 800);
   const st = await page.evaluate(() => {
     const vis = (s) => { const e = document.querySelector(s); if (!e) return false; const cs = getComputedStyle(e); const r = e.getBoundingClientRect(); return cs.visibility !== 'hidden' && cs.display !== 'none' && +cs.opacity > 0.99 && r.width > 0 && r.height > 0; };
@@ -24,7 +24,6 @@ const fallbackChecks = async (label, ctxOpts, routeBlock) => {
       live: document.documentElement.classList.contains('fip-live'),
       finalVisible: vis('#fip-final'), ctaVisible: vis('#fip-cta'), staticCat: vis('.fip__static'),
       sceneHidden: getComputedStyle(document.querySelector('#fip-scene')).display === 'none',
-      statsText: [...document.querySelectorAll('.num__v')].map((e) => e.textContent.trim()).join(' '),
       revealHidden: [...document.querySelectorAll('[data-reveal]')].filter((e) => +getComputedStyle(e).opacity < 0.99).length,
       trackH: document.querySelector('#fip-track').offsetHeight, vh: innerHeight,
     };
@@ -33,10 +32,14 @@ const fallbackChecks = async (label, ctxOpts, routeBlock) => {
   ok(!st.live, `${label}: scroll story not active`);
   ok(st.finalVisible && st.ctaVisible, `${label}: end-state card + CTA visible`);
   ok(st.staticCat && st.sceneHidden, `${label}: healthy cat shown, live scene hidden`);
-  ok(st.statsText === '۸۰۰+ ۳۹ ۲۲۵', `${label}: stats show final numbers`);
   ok(st.revealHidden === 0, `${label}: no content stuck invisible`);
   ok(st.trackH < st.vh * 2, `${label}: no tall scroll track`);
-  await page.screenshot({ path: `/tmp/claude-0/-home-user-miladkm/41cccd8f-b68b-5090-938e-f9f8d30056a1/scratchpad/s/fallback-${label}.png`, fullPage: true });
+  await page.goto(base + '/index.html', { waitUntil: 'load' });
+  await page.waitForTimeout(routeBlock ? 4600 : 1200);
+  const stats = await page.evaluate(() => [...document.querySelectorAll('.num__v')].map((e) => e.textContent.trim()).join(' '));
+  ok(stats === '۱ ۳۹ ۲۲۵ ۸۰۰+', `${label}: home stats show final numbers (${stats})`);
+  const hid = await page.evaluate(() => [...document.querySelectorAll('[data-reveal],[data-h]')].filter((e) => +getComputedStyle(e).opacity < 0.99).length);
+  ok(hid === 0, `${label}: home has no stuck-invisible content`);
   await ctx.close();
 };
 await fallbackChecks('reduced-motion', { reducedMotion: 'reduce' });
@@ -91,7 +94,7 @@ await fallbackChecks('gsap-blocked', {}, true);
 {
   const ctx = await browser.newContext({ viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
   const page = await ctx.newPage();
-  for (const p of ['index', 'about', 'services', 'contact', 'terms']) {
+  for (const p of ['index', 'fip', 'about', 'services', 'contact', 'terms']) {
     await page.goto(`${base}/${p}.html`, { waitUntil: 'networkidle' });
     const w = await page.evaluate(() => [document.documentElement.scrollWidth, innerWidth]);
     ok(w[0] <= w[1], `360px: ${p}.html has no horizontal overflow (${w[0]}/${w[1]})`);
