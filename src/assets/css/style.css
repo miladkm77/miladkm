@@ -482,3 +482,66 @@ html.motion .scrub-text .sw { opacity: 0.2; }
   .brand__logo { height: 32px; }
   .brand strong { font-size: 1.15rem; white-space: nowrap; }
 }
+
+/* ==========================================================================
+   Header — back to the version-1 look: sticky translucent bar, two-line
+   brand, pill nav with a blue hover state, solid blue "رزرو نوبت" button.
+   ========================================================================== */
+.site-header { background: rgba(245, 241, 232, 0.86); -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid transparent; }
+.site-header.is-scrolled { border-bottom-color: var(--line); box-shadow: 0 6px 24px rgba(18, 22, 30, 0.06); background: rgba(245, 241, 232, 0.9); }
+.site-header__row { gap: 24px; }
+.brand__text strong { font-size: 1.12rem; font-weight: 800; }
+.brand__text small { font-size: 0.74rem; }
+.nav { gap: 6px; }
+.nav a { padding: 8px 18px; border-radius: 999px; font-weight: 600; color: var(--ink-2); transition: color 0.2s, background-color 0.2s; }
+.nav a::after { display: none; }
+.nav a:hover { color: var(--blue-d); background: var(--blue-l); }
+.nav a[aria-current='page'] { color: var(--blue-d); background: var(--blue-l); }
+.site-header .btn--primary { box-shadow: 0 8px 22px rgba(39, 87, 230, 0.28); }
+.site-header .btn--primary:hover { box-shadow: 0 12px 28px rgba(29, 67, 184, 0.34); transform: translateY(-1px); }
+.nav-toggle { border: 1.5px solid var(--line); border-radius: 12px; }
+.nav-toggle span { width: 20px; height: 2px; border-radius: 2px; }
+@media (max-width: 899px) {
+  .site-header { height: auto; }
+  .js .site-header { height: var(--header-h); }
+  .js .nav { position: absolute; inset: 100% 0 auto 0; z-index: 55; flex-direction: column; gap: 2px; padding: 12px var(--gutter) 18px; background: var(--paper); border-bottom: 1px solid var(--line); box-shadow: 0 18px 30px rgba(18, 22, 30, 0.08); transform: translateY(-8px); transition: opacity 0.25s, transform 0.25s var(--ease), visibility 0.25s; }
+  .js .nav.is-open { transform: none; }
+  .js .nav a { font-family: var(--text); font-size: 1.05rem; font-weight: 600; padding: 14px 16px; border-bottom: 0; }
+}
+@media (max-width: 719px) {
+  .site-header__actions .btn { display: inline-flex; }
+  .brand__logo { height: 30px; }
+  .brand strong { font-size: 1.02rem; }
+}
+@media (max-width: 389px) { .site-header__actions .btn { display: none; } }
+
+/* ==========================================================================
+   Header — floating liquid-glass capsule (the earlier "modern" header):
+   translucent material with a specular rim, sliding pill indicator in the
+   nav, glossy blue call-to-action. Overrides the bar styles above.
+   ========================================================================== */
+.site-header { position: sticky; top: 12px; margin-top: 12px; z-index: 80; height: auto; padding-inline: 12px; background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; pointer-events: none; }
+.site-header.is-scrolled { background: none; box-shadow: none; border: 0; }
+.bar { pointer-events: auto; position: relative; isolation: isolate; display: flex; align-items: center; gap: 18px; width: min(1080px, 100%); margin-inline: auto; padding: 8px 10px 8px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.56); -webkit-backdrop-filter: blur(24px) saturate(1.8); backdrop-filter: blur(24px) saturate(1.8); box-shadow: 0 1px 1px rgba(255, 255, 255, 0.7) inset, 0 -1px 1px rgba(255, 255, 255, 0.2) inset, 0 10px 30px rgba(24, 48, 110, 0.12), 0 2px 6px rgba(24, 48, 110, 0.07); transition: width 0.6s var(--ease), background-color 0.3s, box-shadow 0.3s; }
+.site-header.is-scrolled .bar { width: min(780px, 100%); background: rgba(255, 255, 255, 0.78); box-shadow: 0 1px 1px rgba(255, 255, 255, 0.8) inset, 0 24px 60px rgba(24, 48, 110, 0.18), 0 6px 16px rgba(24, 48, 110, 0.08); }
+.bar::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1.2px; pointer-events: none; z-index: 2; background: linear-gradient(140deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.12) 32%, rgba(255, 255, 255, 0.04) 62%, rgba(255, 255, 255, 0.75)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+.bar::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1; background: radial-gradient(360px circle at var(--mx, 25%) var(--my, -20%), rgba(255, 255, 255, 0.75), transparent 62%); opacity: 0.5; transition: opacity 0.4s; }
+.bar:hover::after { opacity: 1; }
+.brand__text strong { font-size: 1.05rem; }
+.nav { position: relative; margin-inline-start: auto; gap: 2px; padding: 4px; border-radius: 999px; background: rgba(255, 255, 255, 0.4); }
+.nav a { position: relative; z-index: 1; padding: 7px 18px; font-size: 0.95rem; background: none; }
+.nav a:hover, .nav a[aria-current='page'] { background: none; color: var(--blue-d); }
+.nav__ind { position: absolute; z-index: 0; top: 4px; bottom: 4px; inset-inline-start: 0; width: 0; border-radius: 999px; background: #fff; box-shadow: 0 2px 10px rgba(24, 48, 110, 0.14); opacity: 0; }
+html:not(.motion) .nav a[aria-current='page'] { background: #fff; box-shadow: 0 2px 10px rgba(24, 48, 110, 0.14); }
+.btn--glossy { background: linear-gradient(180deg, #5b8dff 0%, var(--blue) 55%, var(--blue-d) 100%); box-shadow: 0 1px 1px rgba(255, 255, 255, 0.55) inset, 0 -2px 6px rgba(9, 40, 120, 0.35) inset, 0 12px 26px rgba(39, 87, 230, 0.4), 0 2px 6px rgba(39, 87, 230, 0.3); }
+.site-header .btn--glossy:hover { background: linear-gradient(180deg, #6b98ff 0%, #3466ee 55%, var(--blue-d) 100%); transform: translateY(-1px) scale(1.02); }
+.nav-toggle { border: 0; background: rgba(255, 255, 255, 0.5); border-radius: 50%; }
+@media (max-width: 899px) {
+  .bar { gap: 10px; }
+  .js .nav { position: absolute; inset: calc(100% + 8px) 0 auto 0; margin: 0; padding: 10px; border-radius: 28px; flex-direction: column; background: rgba(255, 255, 255, 0.86); -webkit-backdrop-filter: blur(24px) saturate(1.8); backdrop-filter: blur(24px) saturate(1.8); box-shadow: 0 24px 60px rgba(24, 48, 110, 0.2); border-bottom: 0; }
+  .js .nav a { padding: 14px 18px; border-radius: 18px; }
+  .nav__ind { display: none; }
+  .nav a[aria-current='page'] { background: var(--blue-l); }
+  .bar .site-header__actions { margin-inline-start: auto; }
+}
+@media (max-width: 899px) { .js .nav { background: var(--paper); -webkit-backdrop-filter: none; backdrop-filter: none; } }

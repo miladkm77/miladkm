@@ -129,6 +129,39 @@
     });
   });
 
+
+  /* header capsule: pointer sheen, sliding nav indicator, magnetic CTA */
+  safe('header-fx', () => {
+    const bar = $('.bar');
+    if (!bar) return;
+    if (fine) {
+      bar.addEventListener('pointermove', (e) => {
+        const r = bar.getBoundingClientRect();
+        bar.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        bar.style.setProperty('--my', `${e.clientY - r.top}px`);
+      });
+      const cta = $('.btn--glossy', bar);
+      if (cta) {
+        const qx = gsap.quickTo(cta, 'x', { duration: 0.5, ease: 'power3.out' });
+        const qy = gsap.quickTo(cta, 'y', { duration: 0.5, ease: 'power3.out' });
+        cta.addEventListener('pointermove', (e) => { const r = cta.getBoundingClientRect(); qx((e.clientX - (r.left + r.width / 2)) * 0.25); qy((e.clientY - (r.top + r.height / 2)) * 0.35); });
+        cta.addEventListener('pointerleave', () => gsap.to(cta, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1, 0.5)', overwrite: 'auto' }));
+      }
+    }
+    const nav = $('.nav'); const ind = $('.nav__ind');
+    if (!nav || !ind || getComputedStyle(nav).position === 'absolute') return;
+    const links = $$('a', nav);
+    const current = links.find((l) => l.getAttribute('aria-current') === 'page');
+    const place = (l, animate = true) => {
+      if (!l) { gsap.to(ind, { opacity: 0, duration: 0.25 }); return; }
+      gsap.to(ind, { right: 'auto', left: l.offsetLeft, width: l.offsetWidth, opacity: 1, duration: animate ? 0.55 : 0, ease: 'expo.out', overwrite: true });
+    };
+    place(current, false);
+    links.forEach((l) => l.addEventListener('pointerenter', () => place(l)));
+    nav.addEventListener('pointerleave', () => place(current));
+    window.addEventListener('resize', () => place(current, false));
+  });
+
   /* words → masked spans (Persian joins letters, so never split below the word) */
   const splitWords = (el, mode) => {
     const out = [];
