@@ -439,3 +439,8 @@ html.motion .scrub-text .sw { opacity: 0.2; }
 .mini-tl { border-top: 1px solid var(--line); }
 .mini-tl li { display: grid; grid-template-columns: 110px 1fr; align-items: baseline; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
 .mini-tl .display { font-size: 2rem; color: var(--blue); }
+
+/* on the home page the FIP story is one chapter among several — keep it shorter */
+.page-home .fip__intro { padding-block: clamp(72px, 10vw, 140px) clamp(40px, 6vw, 80px); }
+.fip-live .page-home .fip__track, html.fip-live body.page-home .fip__track { height: 400vh; height: 400svh; }
+@media (max-width: 719px) { html.fip-live body.page-home .fip__track { height: 330vh; height: 330svh; } }

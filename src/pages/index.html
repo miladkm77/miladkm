@@ -46,7 +46,7 @@
     <h2 class="display h2" id="areas-title" data-split>در چه مواردی می‌توانم کمک کنم</h2>
     <ol class="area-list">
       <li data-reveal><a href="services.html"><span class="area__n display">۰۱</span><span class="area__t display">بیماری‌های داخلی دام کوچک</span><span class="area__d">تشخیص و درمان مشکلات داخلی سگ و گربه؛ تخصص اصلی و کار هر روز.</span><span class="area__go" aria-hidden="true">←</span></a></li>
-      <li data-reveal><a href="fip.html"><span class="area__n display">۰۲</span><span class="area__t display">FIP و درمان با <span class="ltr">GS-441524</span></span><span class="area__d">پروتکل ۸۴ روزه؛ تجربهٔ درمان بیش از ۸۰۰ گربه.</span><span class="area__go" aria-hidden="true">←</span></a></li>
+      <li data-reveal><a href="#fip"><span class="area__n display">۰۲</span><span class="area__t display">FIP و درمان با <span class="ltr">GS-441524</span></span><span class="area__d">پروتکل ۸۴ روزه؛ تجربهٔ درمان بیش از ۸۰۰ گربه.</span><span class="area__go" aria-hidden="true">←</span></a></li>
       <li data-reveal><a href="about.html#research"><span class="area__n display">۰۳</span><span class="area__t display">چشم‌پزشکی دامپزشکی</span><span class="area__d">فشار داخل چشم، تولید اشک و میکروفلور ملتحمه.</span><span class="area__go" aria-hidden="true">←</span></a></li>
       <li data-reveal><a href="about.html#research"><span class="area__n display">۰۴</span><span class="area__t display">دام‌های اگزوتیک</span><span class="area__d">همستر، خوکچه، لاک‌پشت، پرندگان و اسب ترکمن.</span><span class="area__go" aria-hidden="true">←</span></a></li>
       <li data-reveal><a href="about.html#research"><span class="area__n display">۰۵</span><span class="area__t display">سگ‌های سالمند</span><span class="area__d">اختلال شناختی و مراقبت در سنین بالا.</span><span class="area__go" aria-hidden="true">←</span></a></li>
@@ -55,8 +55,48 @@
   </div>
 </section>
 
-<!-- ============ 4 — About strip ============ -->
-<section class="section" aria-labelledby="ab-title">
+<!-- ============ 4 — FIP scroll story (one of the areas) ============ -->
+<section class="fip" id="fip" aria-labelledby="fip-title">
+  <div class="container fip__intro">
+    <p class="overline overline--light" data-reveal>یکی از حوزه‌های کار</p>
+    <h2 class="display h2" id="fip-title" data-reveal>درمان FIP با پروتکل <em class="ltr">GS-441524</em></h2>
+    <p class="scrub-text" data-scrub>FIP (پریتونیت عفونی گربه) تا چند سال پیش تقریباً حکم قطعی بود؛ امروز با پروتکل ۸۴ روزهٔ <span class="ltr">GS-441524</span> بسیاری از گربه‌ها به درمان پاسخ می‌دهند. نتیجه هیچ‌وقت تضمین‌شده نیست و به تشخیص زودهنگام و پیگیری دقیق بستگی دارد. دکتر مانلی این پروتکل را برای بیش از ۸۰۰ گربه اجرا کرده است.</p>
+  </div>
+
+  <div class="fip__track" id="fip-track">
+    <div class="fip__stage" id="fip-stage">
+      <a class="fip__skip" href="#about">رد شدن از روایت ↓</a>
+      <div class="fip__hud" aria-hidden="true">
+        <div class="fip__day"><small>روز درمان</small><b class="display" id="fip-day">۱</b></div>
+        <div class="fip__meter">
+          <div class="fip__meter-track"><span class="fip__meter-fill" id="fip-meter"></span></div>
+          <div class="fip__meter-ticks"><span>۱</span><span>۲۸</span><span>۵۶</span><span>۸۴</span></div>
+        </div>
+      </div>
+      <div class="fip__art" role="img" aria-label="ایلاستریشن یک گربه که طی ۸۴ روز درمان از حالت خمیده و بی‌رمق به حالت نشسته و سرحال می‌رسد و سپس یکی از صدها گربهٔ تحت درمان می‌شود">
+        <svg class="fip__static" viewBox="40 30 350 340" aria-hidden="true" focusable="false">{{cat_frame4}}</svg>
+        <svg class="fip__scene" id="fip-scene" viewBox="-640 -360 1280 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+          <g id="fip-world">
+            <g id="fip-crowd"></g>
+            <g id="fip-cat" transform="translate(-56.5 -169.5) scale(.25)">{{cat_frames}}</g>
+          </g>
+        </svg>
+      </div>
+      <div class="fip__final" id="fip-final">
+        <div class="fip__final-card">
+          <span class="fip__num display" id="fip-num">۸۰۰+</span>
+          <span class="fip__cap">گربه تحت درمان با <span class="ltr">GS-441524</span><small>هر کدام یک مسیر جدا؛ و همهٔ آن‌ها با یک نگرانی مشترک شروع شد.</small></span>
+          <a class="btn btn--go btn--primary btn--lg" id="fip-cta" href="contact.html?visit=online#form">شروع ویزیت آنلاین<span class="btn__ico"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+          <p class="fip__disclaimer">درمان FIP همیشه به نتیجه نمی‌رسد و هیچ نتیجه‌ای تضمین نمی‌شود. تصمیم درمانی پس از بررسی پروندهٔ حیوان شما گرفته می‌شود.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 5 — About strip ============ -->
+<section class="section" id="about" aria-labelledby="ab-title">
   <div class="container about-strip">
     <div>
       <p class="overline" data-reveal>درباره دکتر</p>
@@ -73,7 +113,7 @@
   </div>
 </section>
 
-<!-- ============ 5 — Services ============ -->
+<!-- ============ 6 — Services ============ -->
 <section class="section section--paper2" id="services" aria-labelledby="svc-title">
   <div class="container">
     <p class="overline" data-reveal>چطور شروع کنیم؟</p>
