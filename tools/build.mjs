@@ -21,8 +21,9 @@ const site = {
   phone: '۰۹۳۷ ۶۳۶ ۶۱۵۳',
   phoneTel: '+989376366153',
   whatsapp: 'https://wa.me/989376366153',
-  // TODO: replace with the exact ResearchGate profile URL from the current site.
-  researchgate: 'https://www.researchgate.net/',
+  researchgate: 'https://www.researchgate.net/profile/Maneli-Mood-2',
+  scholar: 'https://scholar.google.com/citations?user=QbNHoV0AAAAJ&hl=en',
+  instagram: 'https://www.instagram.com/manelli.ansari',
   omid: {
     name: 'بیمارستان دامپزشکی امید',
     address: 'یوسف‌آباد، خیابان مهرام (مدبر)، نبش خیابان ۲۰، پلاک ۱',
@@ -71,15 +72,9 @@ const hash = createHash('md5')
 const partial = (name) => readFileSync(join(src, 'partials', `${name}.html`), 'utf8');
 const cat = buildCat();
 
-// Photos are optional at build time: drop real files into src/assets/img/ and
-// they replace the designed placeholders automatically (no code change).
 const hasImg = (n) => existsSync(join(src, 'assets/img', n));
-const heroPhoto = hasImg('dr-hero.jpg')
-  ? `<img src="assets/img/dr-hero.jpg" alt="دکتر مانلی انصاری مود هنگام معاینهٔ یک گربه" width="960" height="1200" fetchpriority="high">`
-  : `<div class="photo-frame__ph"><svg viewBox="40 30 350 340" aria-hidden="true">${cat.frames[3]}</svg></div><span class="photo-frame__tag">جای عکس دکتر در حال معاینه</span>`;
-const portraitPhoto = hasImg('dr-portrait.jpg')
-  ? `<img src="assets/img/dr-portrait.jpg" alt="پرتره دکتر مانلی انصاری مود" width="900" height="1200" loading="lazy">`
-  : `<div class="photo-frame__ph photo-frame__ph--mono" aria-hidden="true">م</div><span class="photo-frame__tag">جای پرتره دکتر</span>`;
+const heroPhoto = `<img src="assets/img/hero-clinical-exam.jpg" alt="دکتر مانلی انصاری مود در حال معاینهٔ یک سگ" width="1080" height="720" fetchpriority="high">`;
+const portraitPhoto = `<img src="assets/img/doctor-portrait.jpg" alt="دکتر مانلی انصاری مود در کنار یک سگ آکیتا در مطب" width="994" height="663" loading="lazy">`;
 
 function render(tpl, ctx) {
   let out = tpl.replace(/\{\{>\s*([\w-]+)\s*\}\}/g, (_, n) => render(partial(n), ctx));
