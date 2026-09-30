@@ -90,14 +90,15 @@ await fallbackChecks('gsap-blocked', {}, true);
   ok(noHScroll, 'mobile: no horizontal scroll on home');
   await ctx.close();
 }
-// ---- horizontal overflow on every page, mobile
-{
-  const ctx = await browser.newContext({ viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
+// ---- horizontal overflow on every page at common phone widths
+for (const w of [360, 390, 430]) {
+  const ctx = await browser.newContext({ viewport: { width: w, height: 800 }, isMobile: true, hasTouch: true });
   const page = await ctx.newPage();
   for (const p of ['index', 'fip', 'about', 'services', 'contact', 'terms']) {
     await page.goto(`${base}/${p}.html`, { waitUntil: 'networkidle' });
-    const w = await page.evaluate(() => [document.documentElement.scrollWidth, innerWidth]);
-    ok(w[0] <= w[1], `360px: ${p}.html has no horizontal overflow (${w[0]}/${w[1]})`);
+    await page.waitForTimeout(1200);
+    const sw = await page.evaluate(() => document.documentElement.scrollWidth);
+    ok(sw <= w, `${w}px: ${p}.html has no horizontal overflow (${sw})`);
   }
   await ctx.close();
 }

@@ -475,3 +475,10 @@ html.motion .scrub-text .sw { opacity: 0.2; }
 .about-strip__photo .photo-frame img { object-position: 80% 35%; }
 @media (min-width: 900px) { .about-strip__photo { position: sticky; top: 120px; } }
 .arch__inner img { position: absolute; inset: -9% 0 auto 0; height: 118%; width: 100%; object-fit: cover; }
+@media (max-width: 719px) {
+  .site-header__row { gap: 12px; }
+  .site-header__actions .btn { display: none; } /* the bottom dock carries the call-to-action on phones */
+  .brand { gap: 10px; min-width: 0; }
+  .brand__logo { height: 32px; }
+  .brand strong { font-size: 1.15rem; white-space: nowrap; }
+}
